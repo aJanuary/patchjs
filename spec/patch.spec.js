@@ -13,15 +13,27 @@ describe('Patch', function() {
     it('invokes the scope function', function() {
 	    var hasBeenCalled = false;
 
-	    Patch.object({}, 'abc', function() { }, function() {
+	    Patch.object({}, 'prop', null, function() {
 	      hasBeenCalled = true;
 	    });
 
 	    expect(hasBeenCalled).toBe(true);
 	  });
 	
-    it('patches the function implementation', function() {
+    it('patches functions', function() {
       Patch.object(obj, 'isPatched', function() { return true; }, function() {
+	      expect(obj.isPatched()).toBe(true);
+	    });
+    });
+    
+    it('patches variables', function() {
+      Patch.object(obj, 'patched', true, function() {
+	      expect(obj.patched).toBe(true);
+	    });
+    });
+    
+    it('creates a patch function out of a constant value', function() {
+      Patch.object(obj, 'isPatched', true, function() {
 	      expect(obj.isPatched()).toBe(true);
 	    });
     });
@@ -39,18 +51,6 @@ describe('Patch', function() {
       }).toThrow('error');
 
 	    expect(obj.isPatched()).toBe(false);
-	  });
-    
-    it('creates a patch function out of a constant value', function() {
-      Patch.object(obj, 'isPatched', true, function() {
-	      expect(obj.isPatched()).toBe(true);
-	    });
-    });
-    
-    it('patches a constant', function() {
-      Patch.object(obj, 'patched', true, function() {
-	      expect(obj.patched).toBe(true);
-	    });
-    });
+	  });    
   });
 });

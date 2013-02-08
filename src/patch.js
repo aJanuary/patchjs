@@ -1,18 +1,18 @@
 Patch = (function() {
-  function patch_object(obj, func_name, patch_func, scope) {
-    var old_func = obj[func_name];
+  function patch_object(obj, prop_name, new_val, scope) {
+    var old_val = obj[prop_name];
 
-    if (typeof patch_func !== 'function' && typeof old_func === 'function') {
-      var const_val = patch_func;
-      patch_func = function() { return const_val; }
+    if (typeof old_val === 'function' && typeof new_val !== 'function') {
+      var const_val = new_val;
+      new_val = function() { return const_val; }
     }
     
-	  obj[func_name] = patch_func;
+	  obj[prop_name] = new_val;
 
     try {
       scope();
     } finally {
-      obj[func_name] = old_func;
+      obj[prop_name] = old_val;
 	  }
   }
 
