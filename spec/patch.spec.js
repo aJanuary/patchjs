@@ -11,25 +11,35 @@ describe('Patch', function() {
 
   describe('object', function() {
     it('invokes the scope function', function() {
-	  var hasBeenCalled = false;
+	    var hasBeenCalled = false;
 
-	  Patch.object({}, 'abc', function() { }, function() {
-	    hasBeenCalled = true;
+	    Patch.object({}, 'abc', function() { }, function() {
+	      hasBeenCalled = true;
+	    });
+
+	    expect(hasBeenCalled).toBe(true);
 	  });
-
-	  expect(hasBeenCalled).toBe(true);
-	});
 	
     it('patches the function implementation', function() {
       Patch.object(obj, 'isPatched', function() { return true; }, function() {
-	    console.log(obj);
-	    expect(obj.isPatched()).toBe(true);
-	  });
+	      console.log(obj);
+	      expect(obj.isPatched()).toBe(true);
+	    });
     });
 	
-	it('unpatches after executing the scope', function() {
+  	it('unpatches after executing the scope', function() {
       Patch.object(obj, 'isPatched', function() { return true; }, function() { });
-	  expect(obj.isPatched()).toBe(false);
-	});
+	    expect(obj.isPatched()).toBe(false);
+	  });
+	
+    it('unpatches if scope throws an exception', function() {
+      expect(function() {
+        Patch.object(obj, 'isPatched', function() { return true; }, function() {
+          throw 'error';
+        })
+      }).toThrow('error');
+
+	    expect(obj.isPatched()).toBe(false);
+	  });
   });
 });
