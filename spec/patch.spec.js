@@ -109,5 +109,11 @@ describe('Patch', function() {
         expect(newObj.arguments).toEqual([1, 2, 3]);
       });
     });
+    
+    it('does not affect existing objects', function() {
+      Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() {
+        expect(obj.isPatched()).toBe(false);
+      });
+    });
   });
 });
