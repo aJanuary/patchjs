@@ -15,8 +15,13 @@ Patch = (function() {
       obj[prop_name] = old_val;
 	  }
   }
+  
+  function patch_constructor(scope) {
+    scope();
+  }
 
   return {
-    object: patch_object
+    object: patch_object,
+    object_constructor: patch_constructor
   };
 })();

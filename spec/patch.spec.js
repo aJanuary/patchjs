@@ -53,4 +53,16 @@ describe('Patch', function() {
 	    expect(obj.isPatched()).toBe(false);
 	  });    
   });
+
+  describe('object_constructor', function() {
+    it('invokes the scope function', function() {
+      var hasBeenCalled = false;
+      
+      Patch.object_constructor(function() {
+        hasBeenCalled = true;
+      });
+      
+      expect(hasBeenCalled).toBe(true);
+    });
+  });
 });
