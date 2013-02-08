@@ -1,5 +1,6 @@
 Patch = (function() {
-  function patch_object(scope) {
+  function patch_object(obj, func_name, patch_func, scope) {
+    obj[func_name] = patch_func;
 	scope();
   }
 
