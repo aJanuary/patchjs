@@ -2,6 +2,7 @@ describe('Patch', function() {
   var obj;
   var Obj = function() {
     this.patched = false;
+    this.arguments = Array.prototype.slice.call(arguments);
   }
   Obj.prototype.isPatched = function() { return this.patched; }
   
@@ -100,6 +101,13 @@ describe('Patch', function() {
       }).toThrow('error');
 
 	    expect(new Namespace.Obj().isPatched()).toBe(false);
+    });
+    
+    it('passes arguments to original constructor', function() {
+      Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() {
+        var newObj = new Namespace.Obj(1, 2, 3);
+        expect(newObj.arguments).toEqual([1, 2, 3]);
+      });
     });
   });
 });

@@ -12,6 +12,16 @@ Patch = (function() {
     return old_val;
   }
   
+   function construct_object(Constructor, args) {
+		var Temp = function() { };
+		Temp.prototype = Constructor.prototype;
+		
+		var inst = new Temp();
+		var ret = Constructor.apply(inst, args);
+		
+		return Object(ret) === ret ? ret : inst;
+	}
+  
   function patch_object(obj, prop_name, new_val, scope) {
     var old_val = apply_patch(obj, prop_name, new_val);
 
@@ -25,7 +35,7 @@ Patch = (function() {
   function patch_new_objects(context, obj_name, prop_name, new_val, scope) {
     var OldConstructor = context[obj_name];
     context[obj_name] = function() {
-      var obj = new OldConstructor();
+      var obj = new construct_object(OldConstructor, arguments);
       apply_patch(obj, prop_name, new_val);
       return obj;
     };
