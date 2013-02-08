@@ -91,5 +91,15 @@ describe('Patch', function() {
       Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() { });
       expect(new Namespace.Obj().isPatched()).toBe(false);
     });
+    
+    it('unpatches if scope throws an exception', function() {
+      expect(function() {
+        Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() {
+          throw 'error';
+        })
+      }).toThrow('error');
+
+	    expect(new Namespace.Obj().isPatched()).toBe(false);
+    });
   });
 });

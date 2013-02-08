@@ -30,8 +30,11 @@ Patch = (function() {
       return obj;
     };
     
-    scope();
-    context[obj_name] = OldConstructor;
+    try {
+      scope();
+    } finally {
+      context[obj_name] = OldConstructor;
+    }
   }
 
   return {
