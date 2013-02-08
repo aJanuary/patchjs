@@ -40,5 +40,11 @@ describe('Patch', function() {
 
 	    expect(obj.isPatched()).toBe(false);
 	  });
+    
+    it('creates a patch function out of a constant value', function() {
+      Patch.object(obj, 'isPatched', true, function() {
+	      expect(obj.isPatched()).toBe(true);
+	    });
+    });
   });
 });
