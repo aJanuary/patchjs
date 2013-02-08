@@ -74,5 +74,11 @@ describe('Patch', function() {
         expect(new Namespace.Obj().isPatched()).toBe(true);
       });
     });
+    
+    it('patches variables', function() {
+      Patch.new_objects(Namespace, 'Obj', 'patched', true, function() {
+        expect(new Namespace.Obj().patched).toBe(true);
+      });
+    });
   });
 });
