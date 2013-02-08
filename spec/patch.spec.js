@@ -11,7 +11,7 @@ describe('Patch', function() {
   };
   
   beforeEach(function() {
-    obj = new Obj();
+    obj = new Namespace.Obj();
   });
 
   describe('object', function() {
