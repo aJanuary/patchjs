@@ -26,5 +26,10 @@ describe('Patch', function() {
 	    expect(obj.isPatched()).toBe(true);
 	  });
     });
+	
+	it('unpatches after executing the scope', function() {
+      Patch.object(obj, 'isPatched', function() { return true; }, function() { });
+	  expect(obj.isPatched()).toBe(false);
+	});
   });
 });
