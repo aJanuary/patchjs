@@ -54,11 +54,11 @@ describe('Patch', function() {
 	  });    
   });
 
-  describe('object_constructor', function() {
+  describe('new_objects', function() {
     it('invokes the scope function', function() {
       var hasBeenCalled = false;
       
-      Patch.object_constructor(function() {
+      Patch.new_objects(function() {
         hasBeenCalled = true;
       });
       

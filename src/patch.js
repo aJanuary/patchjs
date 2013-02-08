@@ -16,12 +16,12 @@ Patch = (function() {
 	  }
   }
   
-  function patch_constructor(scope) {
+  function patch_new_objects(scope) {
     scope();
   }
 
   return {
     object: patch_object,
-    object_constructor: patch_constructor
+    new_objects: patch_new_objects
   };
 })();
