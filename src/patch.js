@@ -29,7 +29,9 @@ Patch = (function() {
       apply_patch(obj, prop_name, new_val);
       return obj;
     };
+    
     scope();
+    context[obj_name] = OldConstructor;
   }
 
   return {

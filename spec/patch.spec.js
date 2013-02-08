@@ -86,5 +86,10 @@ describe('Patch', function() {
         expect(new Namespace.Obj().isPatched()).toBe(true);
       });
     });
+    
+    it('unpatches after executing the scope', function() {
+      Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() { });
+      expect(new Namespace.Obj().isPatched()).toBe(false);
+    });
   });
 });
