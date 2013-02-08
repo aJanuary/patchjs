@@ -1,5 +1,5 @@
 Patch = (function() {
-  function patch_object(obj, prop_name, new_val, scope) {
+  function apply_patch(obj, prop_name, new_val) {
     var old_val = obj[prop_name];
 
     if (typeof old_val === 'function' && typeof new_val !== 'function') {
@@ -8,6 +8,12 @@ Patch = (function() {
     }
     
 	  obj[prop_name] = new_val;
+    
+    return old_val;
+  }
+  
+  function patch_object(obj, prop_name, new_val, scope) {
+    var old_val = apply_patch(obj, prop_name, new_val);
 
     try {
       scope();
@@ -20,7 +26,7 @@ Patch = (function() {
     var OldConstructor = context[obj_name];
     context[obj_name] = function() {
       var obj = new OldConstructor();
-      obj[prop_name] = new_val;
+      apply_patch(obj, prop_name, new_val);
       return obj;
     };
     scope();

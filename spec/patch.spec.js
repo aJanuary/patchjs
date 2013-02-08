@@ -80,5 +80,11 @@ describe('Patch', function() {
         expect(new Namespace.Obj().patched).toBe(true);
       });
     });
+    
+    it('creates a patch function out of a constant value', function() {
+      Patch.new_objects(Namespace, 'Obj', 'isPatched', true, function() {
+        expect(new Namespace.Obj().isPatched()).toBe(true);
+      });
+    });
   });
 });
