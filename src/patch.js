@@ -16,7 +16,13 @@ Patch = (function() {
 	  }
   }
   
-  function patch_new_objects(scope) {
+  function patch_new_objects(context, obj_name, prop_name, new_val, scope) {
+    var OldConstructor = context[obj_name];
+    context[obj_name] = function() {
+      var obj = new OldConstructor();
+      obj[prop_name] = new_val;
+      return obj;
+    };
     scope();
   }
 

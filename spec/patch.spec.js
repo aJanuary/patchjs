@@ -5,6 +5,10 @@ describe('Patch', function() {
   }
   Obj.prototype.isPatched = function() { return this.patched; }
   
+  var Namespace = {
+    Obj: Obj
+  };
+  
   beforeEach(function() {
     obj = new Obj();
   });
@@ -58,11 +62,17 @@ describe('Patch', function() {
     it('invokes the scope function', function() {
       var hasBeenCalled = false;
       
-      Patch.new_objects(function() {
+      Patch.new_objects(this, 'Obj', 'prop', null, function() {
         hasBeenCalled = true;
       });
       
       expect(hasBeenCalled).toBe(true);
+    });
+    
+    it('patches functions', function() {
+      Patch.new_objects(Namespace, 'Obj', 'isPatched', function() { return true; }, function() {
+        expect(new Namespace.Obj().isPatched()).toBe(true);
+      });
     });
   });
 });
