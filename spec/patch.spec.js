@@ -22,7 +22,6 @@ describe('Patch', function() {
 	
     it('patches the function implementation', function() {
       Patch.object(obj, 'isPatched', function() { return true; }, function() {
-	      console.log(obj);
 	      expect(obj.isPatched()).toBe(true);
 	    });
     });
