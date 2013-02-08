@@ -130,5 +130,12 @@ describe('Patch', function() {
         expect(obj.isPatched()).toBe(false);
       });
     });
+    
+    it('does not unpatch objects created in scope', function() {
+      Patch.new_objects(Namespace, 'Obj', {'isPatched':true}, function() {
+        obj = new Namespace.Obj();
+      });
+      expect(obj.isPatched()).toBe(true);
+    });
   });
 });
